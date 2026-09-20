@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Parser - Core Root</title>
+    <style>
+        body { background-color: #09090b; color: #22c55e; font-family: monospace; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .panel { width: 100%; max-width: 700px; background: #14141b; border: 1px solid #27273a; border-radius: 8px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        h1 { color: #06b6d4; font-size: 1.2rem; text-transform: uppercase; border-bottom: 1px solid #27273a; padding-bottom: 10px; margin-top: 0; }
+        textarea { width: 100%; height: 120px; background: #07070a; color: #38bdf8; border: 1px solid #27273a; padding: 10px; box-sizing: border-box; font-family: inherit; font-size: 0.9rem; }
+        button { width: 100%; background: #1c1c24; color: #fff; border: 1px solid #27273a; padding: 12px; margin: 15px 0; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; }
+        button:hover { border-color: #06b6d4; color: #06b6d4; }
+        pre { background: #07070a; padding: 15px; border: 1px solid #27273a; max-height: 250px; overflow-y: auto; color: #a7f3d0; white-space: pre-wrap; font-size: 0.85rem; margin: 0; }
+    </style>
+</head>
+<body>
+<div class="panel">
+    <h1>Analizador y Limpiador Estructurado JSON</h1>
+    <textarea id="jsonIn" placeholder='Pega el JSON corrupto aquí... Ejemplo: {"id":1,"status":"ok"}'></textarea>
+    <button id="btnFormat">Estructurar Base de Datos</button>
+    <pre id="jsonOut">El resultado alineado aparecerá aquí...</pre>
+</div>
+<script>
+    // @ts-nocheck
+    document.getElementById('btnFormat').addEventListener('click', function() {
+        var input = document.getElementById('jsonIn').value.trim();
+        var out = document.getElementById('jsonOut');
+        if(!input) { out.textContent = '[ERROR] La entrada está vacía.'; out.style.color = '#ef4444'; return; }
+        try {
+            var obj = JSON.parse(input);
+            out.textContent = JSON.stringify(obj, null, 4);
+            out.style.color = '#a7f3d0';
+        } catch(e) {
+            out.textContent = '[ERROR CRÍTICO INFRAESTRUCTURA]\nSintaxis rota detectada en la cadena de metadatos:\n' + e.message;
+            out.style.color = '#ef4444';
+        }
+    });
+</script>
+</body>
+</html>
